@@ -51,6 +51,8 @@ class BasketItem(models.Model):
     created_date=models.DateTimeField(auto_now_add=True)
     updated_date=models.DateTimeField(auto_now=True)
     is_active=models.BooleanField(default=True)
+    size_object=models.ForeignKey(Size,on_delete=models.CASCADE,null=True)
+    is_order_placed=models.BooleanField(default=False)
 
 
 def create_basket(sender,instance,created,**kwargs):
