@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+
+    {%for o in data%}
+    
+    {%if o.get_order_items%}
+    <div class="mx-auto my-4 max-w-4xl md:my-6">
+        <div class="overflow-hidden rounded-xl border border-gray-100 shadow">
+          <div class="grid grid-cols-1 md:grid-cols-2">
+            <div class="px-5 py-6 md:border-r md:border-r-gray-200 md:px-8">
+              <div class="flow-root">
+                <ul class="-my-7 divide-y divide-gray-200">
+                  <!-- iterate order items -->
+                  
+                    {%for oi in o.get_order_items%}
+    
+                    <li class="flex items-stretch justify-between space-x-5 py-7">
+                        <div class="flex flex-1 items-stretch">
+                          <div class="flex-shrink-0">
+                            <img
+                              class="h-20 w-20 rounded-lg border border-gray-200 object-contain"
+                              src="{{oi.basket_item_object.product_object.image.url}}"
+                              alt="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/54a510de-a406-41b2-8d62-7f8c587c9a7e/air-force-1-07-lv8-shoes-9KwrSk.png"
+                            />
+                          </div>
+                          <div class="ml-5 flex flex-col justify-between">
+                            <div class="flex-1">
+                              <p class="text-sm font-bold text-gray-900">
+                                {{oi.basket_item_object.product_object.title}}
+                              </p>
+                              <p class="mt-1.5 text-sm font-medium text-gray-600">
+                                Size:{{oi.basket_item_object.size_object}}
+                              </p>
+                            </div>
+                            <p class="mt-4 text-sm font-medium text-gray-500">x {{oi.basket_item_object.qty}}</p>
+                          </div>
+                        </div>
+                        <div class="ml-auto flex flex-col items-end justify-between">
+                          <p class="text-right text-sm font-bold text-gray-900">
+                            ₹{{oi.basket_item_object.item_total}}
+                          </p>
+                          <a
+                            href="{%url 'item-delete' oi.id%}"
+                            class="-m-2 inline-flex rounded p-2 text-gray-400 transition-all duration-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                          >
+                            <span class="sr-only">Remove</span>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="h-5 w-5"
+                            >
+                              <line x1="18" y1="6" x2="6" y2="18"></line>
+                              <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </a>
+                        </div>
+                      </li>
+    
+                    {%endfor%}
+    
+                  <!-- end iteration -->
+                  
+                </ul>
+                <hr class="mt-6 border-gray-200" />
+                <ul class="mt-6 space-y-3">
+                  <li class="flex items-center justify-between">
+                    <p class="text-sm font-medium">Sub total</p>
+                    <p class="text-sm font-medium">₹{{o.get_order_total}}</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="px-5 py-6 md:px-8">
+              <div class="flow-root">
+                <div class="-my-6 divide-y divide-gray-200">
+                  <div class="py-6">
+                    <h2 class="text-base font-bold text-black">
+                      Contact Information
+                    </h2>
+                    <p class="fontmedium mt-3 text-xs text-gray-700">
+                      Order Number: {{o.id}}
+                    </p>
+                    <p class="text-xs font-medium text-gray-700">
+                      Date: March 03, 2023
+                    </p>
+                  </div>
+                  <div class="py-6">
+                    <h2 class="mb-2 text-base font-bold text-black">
+                      Shipping Information
+                    </h2>
+                    <p class="mt-3 text-xs font-medium text-gray-700">{{o.email}}</p>
+                    <p class="text-xs font-medium text-gray-700">
+                      {{o.delivery_address}}
+                    </p>
+                    <p class="text-xs font-medium text-gray-700">{{o.phone}}</p>
+                  </div>
+                  <div class="py-6">
+                    <h2 class="text-base font-bold text-black">
+                      Payment Information
+                    </h2>
+                    <p class="mt-3 text-xs font-medium text-gray-700">
+                      **** **** **** 6202
+                    </p>
+                    <p class="text-xs font-medium text-gray-700">Expires 09/25</p>
+                    {%if o.is_paid%}
+
+                      <p>successfully paid</p>
+
+                    {%else%}
+
+                      <p>payment error</p>
+
+                    {%endif%}
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+
+    {%endif%}
+      
+    {%endfor%}
+
+
+
+</body>
+</html>
